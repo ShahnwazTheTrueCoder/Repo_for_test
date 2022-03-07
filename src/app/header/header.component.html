@@ -1,0 +1,14 @@
+<div class="pfirstdiv">
+  <h1>Parent</h1>
+  <br>
+
+  <!-- <app-footer [parentDataComing]='parentData'></app-footer> -->
+
+  <br>
+  <label >
+    {{comingFromChild}}
+
+  </label>
+  <app-footer (dataGoingToParent)="comingdata($event)"></app-footer>
+
+</div>

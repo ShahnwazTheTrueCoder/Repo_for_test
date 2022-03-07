@@ -1,0 +1,164 @@
+<div class="d-flex justify-content-around align-items-center">
+  <mat-card class="w-25 px-3">
+    <mat-card-title class="display-6"
+      ><small>Reactive Form</small></mat-card-title
+    >
+    <mat-card-content>
+      <form formGroupName="userForm" (ngSubmit)="onSubmit()" appPassword>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="fullname" required />
+            <mat-error *ngIf="fullname?.hasError('required')">
+              Fullname is required and must be a valid name
+            </mat-error>
+            <mat-error
+              *ngIf="
+                fullname?.hasError('pattern') && !fullname?.hasError('required')
+              "
+            >
+              Must be a valid name
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required />
+            <mat-error *ngIf="email?.hasError('required')">
+              Email is required.
+            </mat-error>
+            <mat-error
+              *ngIf="email?.hasError('email') && !email?.hasError('required')"
+            >
+              Enter a valid email address, e.g., john@example.com
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Mobile</mat-label>
+            <input matInput formControlName="mobile" required />
+            <mat-error *ngIf="mobile?.hasError('required')">
+              Mobile is required.
+            </mat-error>
+            <mat-error
+              *ngIf="
+                mobile?.hasError('pattern') && !mobile?.hasError('required')
+              "
+            >
+              Must be a valid Mobile Number
+            </mat-error>
+            <mat-error
+              *ngIf="
+                (!mobile?.hasError('pattern') &&
+                  mobile?.hasError('minlength')) ||
+                (mobile?.hasError('maxlength') && !mobile?.hasError('required'))
+              "
+            >
+              Phone number must be minimum 10 digits and maximum 12 digit in
+              length.
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              [type]="visibility ? 'text' : 'password'"
+              formControlName="password"
+              required
+            />
+            <mat-icon matSuffix (click)="visibility = !visibility">{{
+              visibility ? "visibility_off" : "visibility"
+            }}</mat-icon>
+            <mat-error *ngIf="password?.hasError('required')">
+              Password is required.
+            </mat-error>
+            <mat-error
+              *ngIf="
+                password?.hasError('minlength') &&
+                !password?.hasError('required')
+              "
+            >
+              Password must be at least 6 characters.
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input
+              matInput
+              [type]="cVisibility ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              required
+            />
+            <mat-icon matSuffix (click)="cVisibility = !cVisibility">{{
+              cVisibility ? "visibility_off" : "visibility"
+            }}</mat-icon>
+            <mat-error *ngIf="confirmPassword?.hasError('required')">
+              Confirm Password is required.
+            </mat-error>
+            <mat-error
+              *ngIf="
+                confirmPassword?.hasError('matchPassword') &&
+                !confirmPassword?.hasError('required')
+              "
+            >
+              Password Mismatch
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-checkbox
+            color="primary"
+            [checked]="checked"
+            (change)="checked = !checked"
+            >Agree With Terms And Conditions.</mat-checkbox
+          >
+        </p>
+        <p>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="
+              userForm.invalid == false && checked == true ? false : true
+            "
+          >
+            Sign Up
+          </button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <ng-template [ngIf]="showData">
+    <mat-card class="w-25 px-3">
+      <mat-card-title class="display-6"
+        ><small>Reactive Form Data</small></mat-card-title
+      >
+      <mat-card-content>
+        <mat-list role="list">
+          <mat-list-item role="listitem"
+            >Full Name : {{ userForm.value.fullname }}</mat-list-item
+          >
+          <mat-list-item role="listitem"
+            >Email : {{ userForm.value.email }}</mat-list-item
+          >
+          <mat-list-item role="listitem"
+            >Mobile : {{ userForm.value.mobile }}</mat-list-item
+          >
+          <mat-list-item role="listitem"
+            >Password : {{ userForm.value.password }}</mat-list-item
+          >
+          <mat-list-item role="listitem"
+            >Confirm Password :
+            {{ userForm.value.confirmPassword }}</mat-list-item
+          >
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</div>
